@@ -1,12 +1,17 @@
 //use itertools::Itertools;
 // use permutation::permutation::Permutation;
 
+#[derive(Debug)]
 pub struct Fragment {
-    word_index: i32,
-    length: i32,
+    word_index: usize,
+    length: usize,
 }
 
 fn main() {
+    let mut length: usize = 4;
+
+    let mut fraction: usize = 3;
+    
     let mut tags: Vec<&str> = Vec::new();
 
     tags.push("virtual");
@@ -22,22 +27,34 @@ fn main() {
     tags.push("flexible");
     tags.push("scalable");
 
-    let mut indexes: Vec<usize> = Vec::new();
+    let mut fragments: Vec<Fragment> = Vec::new();
 
     for index in 0..tags.len()  {
-        indexes.push(index)
+        let fragement = Fragment {
+            word_index: index,
+            length: 1,  
+        };
+
+        fragments.push(fragement);
     }
 
     use permutator::{Combination, Permutation};
+
+    let mut permutations: Vec<Vec<&Fragment>> = Vec::new();
     
     let mut counter = 1;
     
-    indexes.combination(4).for_each(|mut c| {
+    fragments.combination(length).for_each(|mut c| {
         c.permutation().for_each(|p| {
             println!("k-permutation@{}={:?}", counter, p);
+            
+            permutations.push(p);
+            
             counter += 1;
         });
     });
+
+    println!("k-permutation@{}", counter);
 
     //let mut fragments: Vec<Fragment> = Vec::new();
 
