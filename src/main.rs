@@ -1,9 +1,14 @@
+use std::env;
+use std::fs;
+
 //use itertools::Itertools;
 // use permutation::permutation::Permutation;
 
+use std::ops::Add;
+
 pub struct Fragment {
     tag: usize,
-    position: i32,
+    position: usize,
 }
 
 fn main() {
@@ -25,11 +30,13 @@ fn main() {
     tags.push("flexible");
     tags.push("scalable");
 
-    let mut fragements: Vec<Fragment> = Vec::new();
+    let tags_reference = &tags;
+
+    let mut fragments: Vec<Fragment> = Vec::new();
     let mut index: usize = 0;
 
-    for tag in tags {
-        fragements.push(Fragment {tag: index, position: 1});
+    for tag in &tags {
+        fragments.push(Fragment {tag: index, position: 1});
         index += 1;
     }
 
@@ -39,7 +46,7 @@ fn main() {
     
     let mut counter = 1;
     
-    fragements.combination(apronym_length).for_each(|mut c| {
+    fragments.combination(apronym_length).for_each(|mut c| {
         c.permutation().for_each(|p| {
             // println!("k-permutation@{}={:?}", counter, p);
             permutations.push(p);
@@ -48,29 +55,26 @@ fn main() {
         });
     });
 
+    let words = fs::read_to_string("C:/Users/alexa/Projects/apronymerbase/static/words.txt")
+        .expect("Should have been able to read the file");
+
+
     for permutation in permutations {
+        let mut apronym = String::new();
+        let mut usedtags = String::new();
+
         for fragment in permutation {
-            println!("{}", tags[1]);
+            
+           
+            let mut s1 = String::from(tags_reference[fragment.tag]);
+
+            apronym += &s1[..fragment.position];
+            usedtags += "-";
+            usedtags += tags_reference[fragment.tag];
         }
-        // for fragment in permutation {
-        //     println!("{}", &tags[fragment.tag]);
-        // }
-        
+
+        if words.contains(&apronym) {
+            println!("{}={}", apronym, usedtags);
+        }    
     }
-
-    //let mut fragments: Vec<Fragment> = Vec::new();
-
-    // let vec = vec!['a','b','c','d'];
-    // let permutation = Permutation::from_vec([0,2,3,1]);
-    // assert_eq!(permutation.apply_slice(&vec), vec!['a','c','d','b']);
-
-    //let perms = tags.permutations();
-    /*
-    let mut permutations: Vec<Vec<&&str>> = Vec::new();
-
-    for permutation in tags.iter().permutations(word_index) {
-        permutations.push(permutation);
-        //permutation.first().unwrap().do_something(vpair.last().unwrap());
-    }
-    */
 }
