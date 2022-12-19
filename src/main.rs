@@ -1,5 +1,7 @@
 use std::env;
 use std::fs;
+use std::str;
+use trie_rs::TrieBuilder;
 
 //use itertools::Itertools;
 // use permutation::permutation::Permutation;
@@ -13,7 +15,7 @@ pub struct Fragment {
 
 fn main() {
     let fragment_length: i32 = 3;
-    let apronym_length: usize = 4;
+    let apronym_length: usize = 5;
 
     let mut tags: Vec<&str> = Vec::new();
 
@@ -57,7 +59,16 @@ fn main() {
 
     let words = fs::read_to_string("C:/Users/alexa/Projects/apronymerbase/static/words.txt")
         .expect("Should have been able to read the file");
+    
+    let mut builder: TrieBuilder<u8> = TrieBuilder::new();
 
+    let dictionary: Vec<&str> = words.split("\n").collect();
+
+    for word in dictionary {
+        builder.push(&word);
+    }
+
+    let trie = builder.build();
 
     for permutation in permutations {
         let mut apronym = String::new();
@@ -73,8 +84,13 @@ fn main() {
             usedtags += tags_reference[fragment.tag];
         }
 
-        if words.contains(&apronym) {
+        if trie.exact_match(&apronym) {
+        // if trie.exact_match("Test") {
             println!("{}={}", apronym, usedtags);
-        }    
+        }
+
+        // if words.contains(&apronym) {
+        //     println!("{}={}", apronym, usedtags);
+        // }    
     }
 }
