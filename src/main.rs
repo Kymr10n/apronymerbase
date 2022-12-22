@@ -1,12 +1,6 @@
-use std::env;
 use std::fs;
 use std::str;
 use trie_rs::TrieBuilder;
-
-//use itertools::Itertools;
-// use permutation::permutation::Permutation;
-
-use std::ops::Add;
 
 pub struct Fragment {
     tag: usize,
@@ -77,7 +71,7 @@ fn main() {
         for fragment in permutation {
             
            
-            let mut s1 = String::from(tags_reference[fragment.tag]);
+            let s1 = String::from(tags_reference[fragment.tag]);
 
             apronym += &s1[..fragment.position];
             usedtags += "-";
@@ -88,9 +82,5 @@ fn main() {
         // if trie.exact_match("Test") {
             println!("{}={}", apronym, usedtags);
         }
-
-        // if words.contains(&apronym) {
-        //     println!("{}={}", apronym, usedtags);
-        // }    
     }
 }
