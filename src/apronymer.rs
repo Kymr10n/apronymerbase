@@ -1,10 +1,11 @@
+#[derive(Debug)]
 pub struct Fragment {
     tag: usize,
     position: usize,
 }
 
 pub struct Apronymer {
-    tags: Vec<&str>,
+    tags: Vec<String>,
     permutation: Vec<Fragment>,
     fragment_length: i32,
     apronym_length: usize,
@@ -12,16 +13,17 @@ pub struct Apronymer {
 }
 
 impl Apronymer {
-    pub fn initialize(&mut self, mut tags: Vec<&str>, fragment_size: usize) {
-        self.fragment_sets = Vec<Vec<Fragment>>::new();
+    pub fn new() {
+    }
 
+    pub fn initialize(&mut self, mut tags: Vec<&str>, fragment_size: usize) {
         for fragement_index in 0..fragment_size {
-            let mut fragments = Vec<Fragment>::new();
+            let mut fragments: Vec<Fragment> = Vec::new();
             
             for tag_index in 0..tags.len() {       
-                fragments.add(Fragement {tag: tag_index, position: fragement_index,})
+                fragments.push(Fragment {tag: tag_index, position: fragement_index,})
             }
-            self.fragment_sets.add(fragments);
+            self.fragment_sets.push(fragments);
         }
     }
 }
