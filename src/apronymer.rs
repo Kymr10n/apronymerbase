@@ -13,7 +13,14 @@ pub struct Apronymer {
 }
 
 impl Apronymer {
-    pub fn new() {
+    pub fn new() -> Self {
+        return Apronymer {
+            tags: Vec::new(),
+            permutation: Vec::new(),
+            fragment_length: 0,
+            apronym_length: 0,
+            fragment_sets: Vec::new(),
+        };
     }
 
     pub fn initialize(&mut self, mut tags: Vec<&str>, fragment_size: usize) {

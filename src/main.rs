@@ -1,9 +1,9 @@
 use std::fs;
 use std::str;
 use trie_rs::TrieBuilder;
-use apronymer::Apronymer;
 
 mod apronymer;
+use apronymer::Apronymer;
 
 pub struct Fragment {
     tag: usize,
@@ -47,7 +47,7 @@ fn main() {
 
     let mut apronymer: Apronymer = Apronymer::new();
 
-    apronymer.initialize(tags, apronym_length);
+    apronymer.initialize(tags.clone(), apronym_length);
     
     fragments.combination(apronym_length).for_each(|mut c| {
         c.permutation().for_each(|p| {
