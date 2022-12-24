@@ -1,36 +1,59 @@
+use permutator::{Combination, Permutation};
+
 #[derive(Debug)]
 pub struct Fragment {
     tag: usize,
     position: usize,
 }
 
-pub struct Apronymer {
+pub struct Apronymer<'a> {
     tags: Vec<String>,
-    permutation: Vec<Fragment>,
-    fragment_length: i32,
+    permutations: Vec<&'a Fragment>,
+    fragment_length: usize,
     apronym_length: usize,
     fragment_sets: Vec<Vec<Fragment>>,
 }
 
-impl Apronymer {
-    pub fn new() -> Self {
+impl Apronymer<'a> {
+    pub fn new(tags: Vec<String>, apronym_length: usize, fragment_length: usize) -> Self {
         return Apronymer {
-            tags: Vec::new(),
-            permutation: Vec::new(),
-            fragment_length: 0,
-            apronym_length: 0,
+            tags: tags,
+            permutations: Vec::new(),
+            fragment_length: fragment_length,
+            apronym_length: apronym_length,
             fragment_sets: Vec::new(),
         };
     }
 
-    pub fn initialize(&mut self, mut tags: Vec<&str>, fragment_size: usize) {
-        for fragement_index in 0..fragment_size {
+    pub fn initialize(&mut self) {
+        for combination in 0..self.fragment_length.pow(self.tags.len() as u32) {
             let mut fragments: Vec<Fragment> = Vec::new();
             
-            for tag_index in 0..tags.len() {       
-                fragments.push(Fragment {tag: tag_index, position: fragement_index,})
+            let mut helper = combination.clone();
+
+            let mut position = 0;
+
+            for tag_index in 0..self.tags.len() {  
+                position = helper % self.fragment_length;
+                helper = helper / self.fragment_length;
+                
+                fragments.push(Fragment {tag: tag_index, position: position,})
             }
             self.fragment_sets.push(fragments);
         }
+    }
+
+    pub fn permutate(&mut self) {
+        for fragments in self.fragment_sets {
+            fragments.combination(self.apronym_length).for_each(|mut c| {
+                c.permutation().for_each(|p| {
+                    self.permutations.push(p);
+                });
+            });
+        }
+    }
+
+    pub fn get_permutations(&mut self) -> Vec<Fragment> {
+        return self.permutations;
     }
 }

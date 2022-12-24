@@ -11,52 +11,28 @@ pub struct Fragment {
 }
 
 fn main() {
-    let fragment_length: i32 = 3;
+    let fragment_length: usize = 3;
     let apronym_length: usize = 5;
 
-    let mut tags: Vec<&str> = Vec::new();
+    let mut tags: Vec<String> = Vec::new();
 
-    tags.push("virtual");
-    tags.push("desktop");
-    tags.push("environmet");
-    tags.push("remote");
-    tags.push("reliable");
-    tags.push("secure");
-    tags.push("inovative");
-    tags.push("streaming");
-    tags.push("platform");
-    tags.push("workstation");
-    tags.push("flexible");
-    tags.push("scalable");
+    tags.push(String::from("virtual"));
+    tags.push(String::from("desktop"));
+    tags.push(String::from("environmet"));
+    tags.push(String::from("remote"));
+    tags.push(String::from("reliable"));
+    tags.push(String::from("secure"));
+    tags.push(String::from("inovative"));
+    tags.push(String::from("streaming"));
+    tags.push(String::from("platform"));
+    tags.push(String::from("workstation"));
+    tags.push(String::from("flexible"));
+    tags.push(String::from("scalable"));
 
-    let tags_reference = &tags;
+    let mut apronymer: Apronymer = Apronymer::new(tags.clone(), apronym_length, fragment_length);
 
-    let mut fragments: Vec<Fragment> = Vec::new();
-    let mut index: usize = 0;
-
-    for tag in &tags {
-        fragments.push(Fragment {tag: index, position: 1});
-        index += 1;
-    }
-
-    use permutator::{Combination, Permutation};
-
-    let mut permutations: Vec<Vec<&Fragment>> = Vec::new();
-    
-    let mut counter = 1;
-
-    let mut apronymer: Apronymer = Apronymer::new();
-
-    apronymer.initialize(tags.clone(), apronym_length);
-    
-    fragments.combination(apronym_length).for_each(|mut c| {
-        c.permutation().for_each(|p| {
-            // println!("k-permutation@{}={:?}", counter, p);
-            permutations.push(p);
-            
-            counter += 1;
-        });
-    });
+    apronymer.initialize();
+    apronymer.permutate();
 
     let words = fs::read_to_string("C:/Users/alexa/Projects/apronymerbase/static/words.txt")
         .expect("Should have been able to read the file");
@@ -75,18 +51,15 @@ fn main() {
         let mut apronym = String::new();
         let mut usedtags = String::new();
 
-        for fragment in permutation {
-            
-           
-            let s1 = String::from(tags_reference[fragment.tag]);
+        for fragment in apronymer.get_permutations() {
+            let s1 = String::from(&tags[fragment.tag]);
 
             apronym += &s1[..fragment.position];
             usedtags += "-";
-            usedtags += tags_reference[fragment.tag];
+            usedtags += &tags[fragment.tag];
         }
 
         if trie.exact_match(&apronym) {
-        // if trie.exact_match("Test") {
             println!("{}={}", apronym, usedtags);
         }
     }
