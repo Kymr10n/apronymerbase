@@ -34,12 +34,9 @@ fn main() {
     apronymer.initialize();
     apronymer.permutate();
 
-    let words = fs::read_to_string("C:/Users/alexa/Projects/apronymerbase/static/words.txt")
-        .expect("Should have been able to read the file");
+    let dictionary: Vec<&str> = include_str!("../static/dictionary.txt").split("\n").collect();
     
     let mut builder: TrieBuilder<u8> = TrieBuilder::new();
-
-    let dictionary: Vec<&str> = words.split("\n").collect();
 
     for word in dictionary {
         builder.push(&word);
