@@ -7,39 +7,13 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug executable 'apronymerbase'",
-            "cargo": {
-                "args": [
-                    "build",
-                    "--bin=apronymerbase",
-                    "--package=apronymerbase"
-                ],
-                "filter": {
-                    "name": "apronymerbase",
-                    "kind": "bin"
-                }
-            },
+            "name": "Debug",
+            "program": "${fileDirname}/../target/debug/${workspaceRootFolderName}",
             "args": [],
-            "cwd": "${workspaceFolder}"
-        },
-        {
-            "type": "lldb",
-            "request": "launch",
-            "name": "Debug unit tests in executable 'apronymerbase'",
-            "cargo": {
-                "args": [
-                    "test",
-                    "--no-run",
-                    "--bin=apronymerbase",
-                    "--package=apronymerbase"
-                ],
-                "filter": {
-                    "name": "apronymerbase",
-                    "kind": "bin"
-                }
-            },
-            "args": [],
-            "cwd": "${workspaceFolder}"
+            "cwd": "${workspaceRoot}",
+            "sourceLanguages": [
+                "rust"
+            ]
         }
     ]
 }
