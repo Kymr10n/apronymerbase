@@ -1,6 +1,7 @@
 use permutator::{Combination, Permutation};
 
 #[derive(Debug)]
+#[derive(Copy, Clone)]
 pub struct Fragment {
     tag: usize,
     position: usize,
@@ -27,19 +28,20 @@ impl<'a> Apronymer<'a> {
 
     pub fn initialize(&mut self) {
         for combination in 0..self.fragment_length.pow(self.tags.len() as u32) {
-            let mut fragments: Vec<Fragment> = Vec::new();
+            let mut set: Vec<Fragment> = Vec::new();
             
-            let mut helper = combination.clone();
+            let mut counter = combination.clone();
 
-            let mut position = 0;
+            let mut position;
 
             for tag_index in 0..self.tags.len() {  
-                position = helper % self.fragment_length;
-                helper = helper / self.fragment_length;
+                position = counter % self.fragment_length;
+                counter = counter / self.fragment_length;
                 
-                fragments.push(Fragment {tag: tag_index, position: position,})
+                set.push(Fragment {tag: tag_index, position: position,})
             }
-            self.fragment_sets.push(fragments);
+
+            self.fragment_sets.push(set);
         }
     }
 
@@ -49,8 +51,8 @@ impl<'a> Apronymer<'a> {
                 c.permutation().for_each(|p| {
                     self.permutations.push(p);
                 });
-            });
-        } */
+            }); 
+        }*/
     }
 
 /*     pub fn get_permutations(&mut self) -> Vec<Fragment> {

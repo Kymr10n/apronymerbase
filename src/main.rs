@@ -34,6 +34,7 @@ fn main() {
     apronymer.initialize();
     apronymer.permutate();
 
+    //parse dictionary from file into vector
     let dictionary: Vec<&str> = include_str!("../static/dictionary.txt").split("\n").collect();
     
     let mut builder: TrieBuilder<u8> = TrieBuilder::new();
