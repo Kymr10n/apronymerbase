@@ -8,13 +8,13 @@ pub struct Fragment {
 
 pub struct Apronymer<'a> {
     tags: Vec<String>,
-    permutations: Vec<&'a Fragment>,
+    permutations: Vec<Vec<&'a Fragment>>,
     fragment_length: usize,
     apronym_length: usize,
     fragment_sets: Vec<Vec<Fragment>>,
 }
 
-impl Apronymer<'a> {
+impl<'a> Apronymer<'a> {
     pub fn new(tags: Vec<String>, apronym_length: usize, fragment_length: usize) -> Self {
         return Apronymer {
             tags: tags,
@@ -44,16 +44,16 @@ impl Apronymer<'a> {
     }
 
     pub fn permutate(&mut self) {
-        for fragments in self.fragment_sets {
+/*         for fragments in self.fragment_sets {
             fragments.combination(self.apronym_length).for_each(|mut c| {
                 c.permutation().for_each(|p| {
                     self.permutations.push(p);
                 });
             });
-        }
+        } */
     }
 
-    pub fn get_permutations(&mut self) -> Vec<Fragment> {
+/*     pub fn get_permutations(&mut self) -> Vec<Fragment> {
         return self.permutations;
-    }
+    } */
 }

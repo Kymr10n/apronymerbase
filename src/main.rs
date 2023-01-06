@@ -47,7 +47,7 @@ fn main() {
 
     let trie = builder.build();
 
-    for permutation in permutations {
+    /* for permutation in permutations {
         let mut apronym = String::new();
         let mut usedtags = String::new();
 
@@ -62,5 +62,5 @@ fn main() {
         if trie.exact_match(&apronym) {
             println!("{}={}", apronym, usedtags);
         }
-    }
+    } */
 }
