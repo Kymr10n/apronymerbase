@@ -1,3 +1,5 @@
+mod apronymer;
+
 use permutator::{Combination, Permutation};
 
 #[derive(Debug)]
