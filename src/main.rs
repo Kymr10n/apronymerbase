@@ -2,6 +2,8 @@ use std::fs;
 use std::str;
 use trie_rs::TrieBuilder;
 
+mod permutator;
+
 mod apronymer;
 use apronymer::Apronymer;
 

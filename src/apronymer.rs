@@ -1,6 +1,5 @@
-mod apronymer;
-
-use permutator::{Combination, Permutation};
+use crate::permutator;
+//use permutator::{Combination, Permutation}; //external crate; remove when reimplemented
 
 #[derive(Debug)]
 #[derive(Copy, Clone)]
@@ -48,6 +47,7 @@ impl<'a> Apronymer<'a> {
     }
 
     pub fn permutate(&mut self) {
+        permutator::permutate(&mut vec!["A", "B", "C"]);
 /*         for fragments in self.fragment_sets {
             fragments.combination(self.apronym_length).for_each(|mut c| {
                 c.permutation().for_each(|p| {

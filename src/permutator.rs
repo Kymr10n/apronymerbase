@@ -1,35 +1,40 @@
-mod permutator {
-   pub fn permutate(source: Vec<& T>) {
-      let mut length = source.len;
-      let mut iterator: Vec<u32> = Vec::new();
+use std::mem;
+
+pub fn permutate<T>(source: &mut Vec<T>) {
+   let length = source.len();
+   let mut iterator: Vec<usize> = Vec::new();
       //let mut iterator: Vec<usize> = vec![0; length+1];
 
-      for i in 0..length {
-         iterator.push(i);
+   for i in 0..length {
+      iterator.push(i);
+   }
+
+   let mut iterator: Vec<usize> = vec![0; length+1];
+
+   let mut i = 1;
+
+   while i < length {
+      let j;
+
+      iterator[i] -= 1;
+
+      match i % 2 == 0 {
+         true => j = iterator[i],
+         false => j = 0
       }
+/* 
+      let helper: T;
+      helper = source[i];
+      source[i] = source[j];
+      source[j] = helper; */
 
-      let mut iterator: Vec<usize> = vec![0; length+1];
+      //mem::swap(&mut source[j], &mut source[i]);
 
-      let mut index = 1;
+      i = 1;
 
-      while (index < length) {
-         let mut j;
-
-         p[index] -= 1;
-
-         match(index % 2 = 0) {
-            true => j = p[index],
-            false => j = 0
-         }
-
-         swap(source[j], source[index]);
-
-         index = 1;
-
-         while (iterator[index] = 0) {
-            iterator[index] = index;
-            index += 1;
-         }
+      while iterator[i] == 0 {
+         iterator[i] = i;
+         i += 1;
       }
    }
 }
