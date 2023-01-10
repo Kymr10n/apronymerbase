@@ -1,3 +1,39 @@
+mod permutator {
+   pub fn permutate(source: Vec<& T>) {
+      let mut length = source.len;
+      let mut iterator: Vec<u32> = Vec::new();
+      //let mut iterator: Vec<usize> = vec![0; length+1];
+
+      for i in 0..length {
+         iterator.push(i);
+      }
+
+      let mut iterator: Vec<usize> = vec![0; length+1];
+
+      let mut index = 1;
+
+      while (index < length) {
+         let mut j;
+
+         p[index] -= 1;
+
+         match(index % 2 = 0) {
+            true => j = p[index],
+            false => j = 0
+         }
+
+         swap(source[j], source[index]);
+
+         index = 1;
+
+         while (iterator[index] = 0) {
+            iterator[index] = index;
+            index += 1;
+         }
+      }
+   }
+}
+
 /*
 let a[] represent an arbitrary list of objects to permute
    let N equal the length of a[]
